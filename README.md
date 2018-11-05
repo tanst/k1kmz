@@ -49,3 +49,38 @@
 
 获取mm131完整数据库加群：https://jq.qq.com/?_wv=1027&k=5Djwcp4
 
+---
+## auto_post.py in 宝塔面板任务
+```
+#!/bin/bash
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
+export PATH
+ps -ef | grep auto_post.py | grep -v grep | cut -c 9-15 | xargs kill -s 9
+sleep 3m
+if
+screen -ls | grep "mm" 
+then
+screen -S mm -p0 -X stuff "python auto_post.py\015"
+else
+screen -dmS mm && screen -S mm -p0 -X stuff "python auto_post.py\015"
+fi
+echo "----------------------------------------------------------------------------"
+endDate=`date +"%Y-%m-%d %H:%M:%S"`
+echo "â[$endDate] Successful"
+echo "----------------------------------------------------------------------------"
+```
+
+## mm131.py in 宝塔面板任务
+```
+#!/bin/bash
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
+export PATH
+ps -ef | grep mm131.py | grep -v grep | cut -c 9-15 | xargs kill -s 9
+sleep 3m
+cd /root/1/k1kmz-master && python mm131.py &
+echo "----------------------------------------------------------------------------"
+endDate=`date +"%Y-%m-%d %H:%M:%S"`
+echo "â[$endDate] Successful"
+echo "----------------------------------------------------------------------------"
+
+```
